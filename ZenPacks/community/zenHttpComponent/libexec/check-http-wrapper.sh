@@ -3,9 +3,9 @@
 #
 #       check-http-wrapper.sh
 #
-#		wrapper for check-http plugin 
+#		wrapper for check-http plugin
 #		to handle optional arguments
-#		
+#
 ###################################
 
 HOST=$1;
@@ -21,7 +21,11 @@ XFLAGS=$9;
 COMMAND="$ZENHOME/libexec/check_http"
 
 if [ "$HOST" ] ; then
-	COMMAND=$COMMAND" -H "$HOST
+    if  [[ "$HOST" =~ ^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$ ]]; then
+        COMMAND=$COMMAND" -I "$HOST
+    else
+        COMMAND=$COMMAND" -H "$HOST
+    fi
 fi
 
 if [ "$PORT" ] ; then
